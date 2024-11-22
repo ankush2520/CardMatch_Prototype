@@ -8,5 +8,6 @@ namespace CardMatch
     public static class CardGameEvents
     {
         public static Events<int, int> StartGame = new();
+           
     }
 }
