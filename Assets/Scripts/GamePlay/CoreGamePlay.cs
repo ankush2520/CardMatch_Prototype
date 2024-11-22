@@ -2,11 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace CardMatch
 {
     public class CoreGamePlay : MonoBehaviour
     {
+        [SerializeField] CardGridCreator gridCreator;
+
         private void OnEnable()
         {
             CardGameEvents.StartGame.AddListener(StartGame);
@@ -20,12 +23,13 @@ namespace CardMatch
 
         private void StartGame(int rowCount, int colCount)
         {
-            CreateGrid(rowCount, colCount);
+            gridCreator.CreateGrid(rowCount, colCount);
         }
 
-        private void CreateGrid(int rowCount, int colCount)
-        {
-            
+        public void RestartGame() {
+            SceneManager.LoadScene(0);
         }
+
+
     }
 }
