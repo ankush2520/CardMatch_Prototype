@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using TMPro.SpriteAssetUtilities;
 using UnityEditor;
 using UnityEngine;
+using Newtonsoft.Json;
+
 
 namespace CardMatch
 {
@@ -81,13 +83,15 @@ namespace CardMatch
             // Save grid elements
 
             print(cardData.Length);
-            string gridData = UnityEngine.JsonUtility.ToJson(cardData);
+            string gridData = JsonConvert.SerializeObject(cardData);
 
             print(gridData);
 
+          //  JsonConvert.DeserializeObject
+
            // PlayerPrefs.SetString("GridData", gridData);
 
-          //  PlayerPrefs.Save();
+            //  PlayerPrefs.Save();
             Debug.Log("Grid data saved!");
         }
 
