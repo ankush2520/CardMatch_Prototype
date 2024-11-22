@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using static CardMatch.CoreGamePlay;
 
 namespace CardMatch {
+
     public class CardItem : MonoBehaviour
     {
         public VisibleCardSide visible_cardSide; 
@@ -103,6 +104,5 @@ namespace CardMatch {
             GetComponent<RectTransform>().sizeDelta = newSize;
             transform.localPosition = position;
         }
-
     }
 }
