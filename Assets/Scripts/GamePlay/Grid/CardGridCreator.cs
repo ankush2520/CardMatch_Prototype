@@ -13,7 +13,7 @@ namespace CardMatch
         private CardItem[,] cardItems = new CardItem[2, 2];
 
 
-        public void CreateGrid(int row,int col) {
+        public void CreateGrid(int row,int col,List<int> identityNumbers) {
 
             ClearData();
             cardItems = new CardItem[row, col];
@@ -30,7 +30,6 @@ namespace CardMatch
             float xPos = leftPoint.localPosition.x + (width / 2) + (xgap * 0.1f);
             float yPos = downPoint.localPosition.y + (height / 2) + (ygap * 0.1f);
             
-
             int index = 0;
 
             for (int y = 0; y < row; y++)
@@ -40,7 +39,7 @@ namespace CardMatch
                     CardItem element = Instantiate(itemPrefab);
                     element.SetTransformValues(boxParent, height, width, new Vector3(xPos + (x * xgap), yPos));
                     element.gameObject.SetActive(true);
-                    element.SetCoordinatValues(x, y, index);
+                    element.SetCoordinatValues(identityNumbers[index], index);
                     cardItems[y, x] = element;
                     index++;
                 }

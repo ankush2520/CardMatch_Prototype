@@ -449,3 +449,4 @@ MonoBehaviour:
   mainImage: {fileID: 7072841328780590943}
   revealImage: {fileID: 1105118579125135286}
   animationGameObject: {fileID: 2897255457270462415}
+  identityNumber: {fileID: 8428916159815682646}

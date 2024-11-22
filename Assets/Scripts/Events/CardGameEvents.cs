@@ -8,7 +8,7 @@ namespace CardMatch
     public static class CardGameEvents
     {
         public static Events<int, int> StartGame = new();
-        public static Events<int> OnFlipDone = new();
-             
+        public static Events<int> OnFlipAnimationDone = new();
+        public static Events<CardItem> OnCardRevealed = new();
     }
 }

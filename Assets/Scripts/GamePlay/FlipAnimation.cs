@@ -29,7 +29,7 @@ namespace CardMatch
                     transform.rotation = Quaternion.Euler(0, currentYRotation, 0);
                 }
                 else {
-                    CardGameEvents.OnFlipDone.Dispatch(itemIndex);
+                    CardGameEvents.OnFlipAnimationDone.Dispatch(itemIndex);
                     playAnimation = false;
                 }
 

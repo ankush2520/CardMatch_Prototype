@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using static CardMatch.CoreGamePlay;
@@ -8,34 +9,35 @@ using static CardMatch.CoreGamePlay;
 namespace CardMatch {
     public class CardItem : MonoBehaviour
     {
-        VisibleCardSide cardSide;
-
-        public int X { get; private set; }
-        public int Y { get; private set; }
+        public VisibleCardSide visible_cardSide; 
         public int Index { get; private set; }
+        public int IndentityNumber { get; private set; }
 
         [SerializeField] private Button button;
         [SerializeField] private Image mainImage, revealImage;
         [SerializeField] private FlipAnimation animationGameObject;
+        [SerializeField] private TextMeshProUGUI identityNumber;
 
         private Color initialFrontColor;
+        private float watchTime = 0.75f;
 
         private void OnEnable()
         {
-            cardSide = VisibleCardSide.front;
             initialFrontColor = mainImage.color;
-
-            CardGameEvents.OnFlipDone.AddListener(OnFlipDone);
+            CardGameEvents.OnFlipAnimationDone.AddListener(OnFlipDone);
         }
 
         private void OnDisable()
         {
-            CardGameEvents.OnFlipDone.RemoveListener(OnFlipDone);
+            CardGameEvents.OnFlipAnimationDone.RemoveListener(OnFlipDone);
         }
-
 
         public void OnClick()
         {
+            DoFlip();
+        }
+
+        private void DoFlip() {
             animationGameObject.gameObject.SetActive(true);
             animationGameObject.PlayFlip(Index);
 
@@ -49,28 +51,38 @@ namespace CardMatch {
             {
                 animationGameObject.gameObject.SetActive(false);
 
-                if (cardSide == VisibleCardSide.front)
+                if (visible_cardSide == VisibleCardSide.front)
                 {
-                    cardSide = VisibleCardSide.back;
-                    mainImage.color = new Color(1, 1, 1, 0);
-                    revealImage.gameObject.SetActive(true);
+                    ShowBackSide();
+                    
                 }
                 else {
-                    cardSide = VisibleCardSide.front;
-                    mainImage.color = initialFrontColor;
-                    revealImage.gameObject.SetActive(false);
-                }
-                
-                
+                    ShowFrontSide();
+                }                
             }
         }
 
+        private void ShowFrontSide() {
+            visible_cardSide = VisibleCardSide.front;
 
-        public void SetCoordinatValues(int x, int y, int index)
+            mainImage.color = initialFrontColor;
+            revealImage.gameObject.SetActive(false);
+        }
+
+        private void ShowBackSide() {
+            visible_cardSide = VisibleCardSide.back;
+            CardGameEvents.OnCardRevealed.Dispatch(this);
+            mainImage.color = new Color(1, 1, 1, 0);
+            revealImage.gameObject.SetActive(true);
+        }
+
+        public void SetCoordinatValues(int indentityNumber, int index)
         {
-            X = x;
-            Y = y;
+            IndentityNumber = indentityNumber;
             Index = index;
+
+            identityNumber.text = IndentityNumber.ToString();
+            Invoke(nameof(DoFlip), watchTime);
         }
 
         public void SetTransformValues(Transform boxParent, float height, float width, Vector3 position)
