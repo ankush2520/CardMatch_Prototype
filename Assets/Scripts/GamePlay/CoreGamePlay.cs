@@ -8,6 +8,11 @@ namespace CardMatch
 {
     public class CoreGamePlay : MonoBehaviour
     {
+        public enum VisibleCardSide
+        {
+            none, front, back
+        }
+
         [SerializeField] CardGridCreator gridCreator;
 
         private void OnEnable()

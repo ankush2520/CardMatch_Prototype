@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,8 +8,12 @@ namespace CardMatch
     public class FlipAnimation : MonoBehaviour
     {
         private bool playAnimation;
+        private float rotationSpeed = 500, currentYRotation = 0f, targetYRotation = 180f;
+        private int itemIndex = 0;
 
-        public void PlayFlip() {
+        public void PlayFlip(int index) {
+            itemIndex = index;
+            currentYRotation = 0;
             playAnimation = true;
         }
 
@@ -16,9 +21,18 @@ namespace CardMatch
         {
             if (playAnimation)
             {
-                float rotationY = 50 * Time.deltaTime;
-                transform.Rotate(0, rotationY, 0);
-                playAnimation = false;
+                if (currentYRotation < targetYRotation)
+                {
+                    float rotationStep = rotationSpeed * Time.fixedDeltaTime;
+
+                    currentYRotation = Mathf.Min(currentYRotation + rotationStep, targetYRotation);
+                    transform.rotation = Quaternion.Euler(0, currentYRotation, 0);
+                }
+                else {
+                    CardGameEvents.OnFlipDone.Dispatch(itemIndex);
+                    playAnimation = false;
+                }
+
             }            
         }
     }
