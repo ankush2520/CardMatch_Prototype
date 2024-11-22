@@ -104,28 +104,5 @@ namespace CardMatch {
             transform.localPosition = position;
         }
 
-
-        public void SetMainButtonSprite(Sprite sprite)
-        {
-            mainImage.sprite = sprite;
-        }
-
-        public void SetRevealImageColor(Color color)
-        {
-            revealImage.color = color;
-        }
-
-        public void SetRevealImage(Sprite revealImageSprite)
-        {
-            if (revealImageSprite == null)
-            {
-                revealImage.gameObject.SetActive(false);
-            }
-            else
-            {
-                revealImage.gameObject.SetActive(true);
-                this.revealImage.sprite = revealImageSprite;
-            }
-        }
     }
 }

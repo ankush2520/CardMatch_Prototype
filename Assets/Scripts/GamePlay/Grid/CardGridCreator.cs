@@ -10,13 +10,13 @@ namespace CardMatch
         [SerializeField] CardItem itemPrefab;
         [SerializeField] Transform leftPoint, rightPoint, downPoint, upPoint;
 
-//        private CardItem[,] cardItems = new CardItem[2, 2];
+        private CardItem[,] cardItems = new CardItem[2, 2];
 
 
         public void CreateGrid(int row,int col,List<int> identityNumbers) {
 
             ClearData();
-          //  cardItems = new CardItem[row, col];
+            cardItems = new CardItem[row, col];
 
             float horizontal_diff = rightPoint.localPosition.x - leftPoint.localPosition.x;
             float vertical_diff = upPoint.localPosition.y - downPoint.localPosition.y;
@@ -40,23 +40,32 @@ namespace CardMatch
                     element.SetTransformValues(boxParent, height, width, new Vector3(xPos + (x * xgap), yPos));
                     element.gameObject.SetActive(true);
                     element.SetCoordinatValues(identityNumbers[index], index);
-                   // cardItems[y, x] = element;
+                    cardItems[y, x] = element;
                     index++;
                 }
                 yPos += ygap;
             }
         }
 
+        public void DeleteElementsFromGrid(int index) {
+            foreach (var item in cardItems)
+            {
+                if (index == item.Index)
+                {
+                    item = null;
+                }
+            }
+        }
+
         private void ClearData()
         {
-
-            //foreach (var item in cardItems)
-            //{
-            //    if (item)
-            //    {
-            //        Destroy(item.gameObject);
-            //    }
-            //}
+            foreach (var item in cardItems)
+            {
+                if (item)
+                {
+                    Destroy(item.gameObject);
+                }
+            }
         }
     }
 }

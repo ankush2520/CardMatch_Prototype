@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -15,10 +16,13 @@ namespace CardMatch
         }
 
         [SerializeField] CardGridCreator gridCreator;
+        [SerializeField] TextMeshProUGUI scoreText;
 
         private List<CardItem> currentMatch = new List<CardItem>();
 
-        private int ScoreCount;
+        private int ScoreCount, currentRowCount, currenColCount;
+    
+
 
         private void OnEnable()
         {
@@ -32,6 +36,12 @@ namespace CardMatch
             CardGameEvents.StartGame.RemoveListener(StartGame);
             CardGameEvents.OnCardRevealed.RemoveListener(OnCardRevealed);
             CardGameEvents.OnCardClosed.RemoveListener(OnCardClosed);
+        }
+
+        private void UpdateScore(int newScore) {
+            ScoreCount += newScore;
+            ScoreCount = Math.Max(0, ScoreCount);
+            scoreText.text = "Score: " +  ScoreCount; 
         }
 
         private void OnCardRevealed(CardItem item)
@@ -60,15 +70,18 @@ namespace CardMatch
         }
 
         private void CheckStatus()
-        {           
+        {
+            int expectedScore = currentRowCount * currenColCount;
+
             if (currentMatch[0].IndentityNumber == currentMatch[1].IndentityNumber)
             {
-                ScoreCount++;
+                UpdateScore(expectedScore);
                 Destroy(currentMatch[0].gameObject);
                 Destroy(currentMatch[1].gameObject);
             }
             else
             {
+                UpdateScore(-((expectedScore) / 2));
                 currentMatch[0].DoFlip();
                 currentMatch[1].DoFlip();
             }
@@ -78,6 +91,9 @@ namespace CardMatch
 
         private void StartGame(int rowCount, int colCount)
         {
+            currentRowCount = rowCount;
+            currenColCount = colCount;
+
             List<int> identityNumbers = GetListOfRandomNumbers(rowCount, colCount);
 
             gridCreator.CreateGrid(rowCount, colCount, identityNumbers);
@@ -100,7 +116,7 @@ namespace CardMatch
             return randomList;
         }
 
-        public void Shuffle(List<int> list)
+        private void Shuffle(List<int> list)
         {
             RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider();
             int n = list.Count;
