@@ -105,7 +105,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &837582091832175489
 RectTransform:
   m_ObjectHideFlags: 0
@@ -445,6 +445,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c229909f13524d8e871148695c8b214, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  visible_cardSide: 0
   button: {fileID: 1120902180628097242}
   mainImage: {fileID: 7072841328780590943}
   revealImage: {fileID: 1105118579125135286}

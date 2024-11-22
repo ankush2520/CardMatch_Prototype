@@ -18,12 +18,12 @@ namespace CardMatch {
         [SerializeField] private FlipAnimation animationGameObject;
         [SerializeField] private TextMeshProUGUI identityNumber;
 
-        private Color initialFrontColor;
         private float watchTime = 0.75f;
+        private bool inFlip = false;
+          
 
         private void OnEnable()
         {
-            initialFrontColor = mainImage.color;
             CardGameEvents.OnFlipAnimationDone.AddListener(OnFlipDone);
         }
 
@@ -34,16 +34,10 @@ namespace CardMatch {
 
         public void OnClick()
         {
-            DoFlip();
+            if (!inFlip)
+                DoFlip();
         }
 
-        private void DoFlip() {
-            animationGameObject.gameObject.SetActive(true);
-            animationGameObject.PlayFlip(Index);
-
-            mainImage.color = new Color(1, 1, 1, 0);
-            revealImage.gameObject.SetActive(false);
-        }
 
         private void OnFlipDone(int index)
         {
@@ -58,14 +52,18 @@ namespace CardMatch {
                 }
                 else {
                     ShowFrontSide();
-                }                
+                }
+
+                inFlip = false;
             }
         }
 
         private void ShowFrontSide() {
             visible_cardSide = VisibleCardSide.front;
 
-            mainImage.color = initialFrontColor;
+            CardGameEvents.OnCardClosed.Dispatch(this);
+
+            mainImage.color = Color.green;
             revealImage.gameObject.SetActive(false);
         }
 
@@ -74,6 +72,17 @@ namespace CardMatch {
             CardGameEvents.OnCardRevealed.Dispatch(this);
             mainImage.color = new Color(1, 1, 1, 0);
             revealImage.gameObject.SetActive(true);
+        }
+
+        public void DoFlip()
+        {
+            animationGameObject.gameObject.SetActive(true);
+            animationGameObject.PlayFlip(Index);
+
+            mainImage.color = new Color(1, 1, 1, 0);
+            revealImage.gameObject.SetActive(false);
+
+            inFlip = true;
         }
 
         public void SetCoordinatValues(int indentityNumber, int index)

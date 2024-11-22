@@ -16,24 +16,64 @@ namespace CardMatch
 
         [SerializeField] CardGridCreator gridCreator;
 
-        private int lastRevealIndex;
+        private List<CardItem> currentMatch = new List<CardItem>();
+
+        private int ScoreCount;
 
         private void OnEnable()
         {
             CardGameEvents.StartGame.AddListener(StartGame);
             CardGameEvents.OnCardRevealed.AddListener(OnCardRevealed);
+            CardGameEvents.OnCardClosed.AddListener(OnCardClosed);
         }
 
         private void OnDisable()
         {
             CardGameEvents.StartGame.RemoveListener(StartGame);
             CardGameEvents.OnCardRevealed.RemoveListener(OnCardRevealed);
-
+            CardGameEvents.OnCardClosed.RemoveListener(OnCardClosed);
         }
 
         private void OnCardRevealed(CardItem item)
         {
-            lastRevealIndex = item.IndentityNumber;
+            if (!currentMatch.Contains(item))
+            {
+                currentMatch.Add(item);
+            }
+
+            if (currentMatch.Count == 2)
+            {
+                Invoke(nameof(CheckStatus), 0.1f);
+            }
+        }
+
+        private void OnCardClosed(CardItem item)
+        {
+            if (currentMatch!=null && currentMatch.Count>0)
+            {
+                if (currentMatch[0].Index == item.Index)
+                {
+                    currentMatch = new List<CardItem>();
+                }
+            }
+            
+        }
+
+        private void CheckStatus()
+        {           
+            if (currentMatch[0].IndentityNumber == currentMatch[1].IndentityNumber)
+            {
+                ScoreCount++;
+                Destroy(currentMatch[0].gameObject);
+                Destroy(currentMatch[1].gameObject);
+            }
+            else
+            {
+                currentMatch[0].DoFlip();
+                currentMatch[1].DoFlip();
+            }
+
+            currentMatch = new List<CardItem>();
         }
 
         private void StartGame(int rowCount, int colCount)

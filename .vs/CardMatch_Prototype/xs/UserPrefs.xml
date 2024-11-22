@@ -1,18 +1,18 @@
 ﻿<Properties StartupConfiguration="{4A08E38D-1156-6E8B-F9A3-462666B6ECB3}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GamePlay/Grid/CardItem.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GamePlay/CoreGamePlay.cs">
     <Files>
       <File FileName="Assets/Scripts/Events/Events.cs" Line="59" Column="1" />
-      <File FileName="Assets/Scripts/Events/CardGameEvents.cs" Line="12" Column="54" />
-      <File FileName="Assets/Scripts/GamePlay/InputManager.cs" Line="11" Column="40" />
-      <File FileName="Assets/Scripts/GamePlay/CoreGamePlay.cs" Line="36" Column="52" />
-      <File FileName="Assets/Scripts/GamePlay/Grid/CardGridCreator.cs" Line="32" Column="13" />
-      <File FileName="Assets/Scripts/GamePlay/FlipAnimation.cs" Line="29" Column="60" />
-      <File FileName="Assets/Scripts/GamePlay/Grid/CardItem.cs" Line="72" Column="23" />
+      <File FileName="Assets/Scripts/Events/CardGameEvents.cs" />
+      <File FileName="Assets/Scripts/GamePlay/InputManager.cs" />
+      <File FileName="Assets/Scripts/GamePlay/CoreGamePlay.cs" Line="38" Column="13" />
+      <File FileName="Assets/Scripts/GamePlay/Grid/CardGridCreator.cs" />
+      <File FileName="Assets/Scripts/GamePlay/FlipAnimation.cs" />
+      <File FileName="Assets/Scripts/GamePlay/Grid/CardItem.cs" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="15c012a9-a3d0-4a39-842c-389046e0ce4e" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="42ff3aff-e764-4efa-af1a-1afcf1c4dc6a" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
