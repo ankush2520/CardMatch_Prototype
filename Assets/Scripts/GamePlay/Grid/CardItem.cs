@@ -80,6 +80,8 @@ namespace CardMatch {
             animationGameObject.gameObject.SetActive(true);
             animationGameObject.PlayFlip(Index);
 
+            SoundManager.instance.PlayFlipSound();
+
             mainImage.color = new Color(1, 1, 1, 0);
             revealImage.gameObject.SetActive(false);
 

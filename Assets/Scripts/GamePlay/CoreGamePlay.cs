@@ -109,11 +109,14 @@ namespace CardMatch
                         current_cardData[i].Destoryed = true;
                 }
 
+                SoundManager.instance.PlayCorrectSound();
                 CheckforWinStatus();
 
             }
             else
             {
+                SoundManager.instance.PlayWrongSound();
+
                 UpdateScore(-((expectedScore) / 2));
                 currentMatch[0].DoFlip();
                 currentMatch[1].DoFlip();
@@ -135,17 +138,6 @@ namespace CardMatch
 
             gridCreator.CreateGrid(rowCount, colCount, randomList);
         }
-
-        //private void StartGame(List<int> list) {
-
-        //    List<int> randomList;
-        //    if (list != null)
-        //        randomList = list;
-        //    else
-        //        randomList = GetListOfRandomNumbers(rowCount, colCount);
-
-        //    gridCreator.CreateGrid(rowCount, colCount, randomList);
-        //}
 
         private List<int> GetListOfRandomNumbers(int rowCount, int colCount)
         {
