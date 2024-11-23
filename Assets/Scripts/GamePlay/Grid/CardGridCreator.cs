@@ -9,28 +9,20 @@ using Newtonsoft.Json;
 namespace CardMatch
 {
 
-    [System.Serializable]
-    public class CardData
-    {
-        public int Index;
-        public int IdentityNumber;
-    }
+    
 
     public class CardGridCreator : MonoBehaviour
     {
         
-
         [SerializeField] Transform boxParent;
         [SerializeField] CardItem itemPrefab;
         [SerializeField] Transform leftPoint, rightPoint, downPoint, upPoint;
 
-        private CardData[]  cardData;
+        private CardItem[]  cardItems;
 
         public void CreateGrid(int row, int col, List<int> identityNumbers)
         {
-
-            ClearData();
-            cardData = new CardData[row * col];
+            cardItems = new CardItem[row * col];
 
             float horizontal_diff = rightPoint.localPosition.x - leftPoint.localPosition.x;
             float vertical_diff = upPoint.localPosition.y - downPoint.localPosition.y;
@@ -55,13 +47,7 @@ namespace CardMatch
                     element.gameObject.SetActive(true);
                     element.SetCoordinatValues(identityNumbers[index], index);
 
-                    CardData obj = new()
-                    {
-                        IdentityNumber = identityNumbers[index],
-                        Index = index
-                    };
-
-                    cardData[index] = obj;
+                    cardItems[index] = element;
 
                     index++;
                 }
@@ -69,31 +55,10 @@ namespace CardMatch
             }
         }
 
-        private void ClearData()
+        public void DeleteDataFromList(int index)
         {
-            
+            Destroy(cardItems[index].gameObject);
+            cardItems[index] = null;
         }
-
-        private void OnApplicationQuit()
-        {
-            // Save grid dimensions
-            //   PlayerPrefs.SetInt("GridRows", rows);
-            //   PlayerPrefs.SetInt("GridColumns", columns);
-
-            // Save grid elements
-
-            print(cardData.Length);
-            string gridData = JsonConvert.SerializeObject(cardData);
-
-            print(gridData);
-
-          //  JsonConvert.DeserializeObject
-
-           // PlayerPrefs.SetString("GridData", gridData);
-
-            //  PlayerPrefs.Save();
-            Debug.Log("Grid data saved!");
-        }
-
     }
 }

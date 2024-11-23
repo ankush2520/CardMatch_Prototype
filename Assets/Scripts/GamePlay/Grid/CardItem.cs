@@ -19,7 +19,7 @@ namespace CardMatch {
         [SerializeField] private FlipAnimation animationGameObject;
         [SerializeField] private TextMeshProUGUI identityNumber;
 
-        private float watchTime = 0.75f;
+        private float watchTime = 0.5f;
         private bool inFlip = false;
           
 

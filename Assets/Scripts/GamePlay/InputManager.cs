@@ -11,7 +11,6 @@ namespace CardMatch
         [SerializeField] TMP_InputField colInput, rowInput;
         [SerializeField] TextMeshProUGUI warningText;
         [SerializeField] Button playButton;
-        [SerializeField] GameObject inputSelectionPanel;
 
         private int colCount, rowCount;
 
@@ -41,10 +40,7 @@ namespace CardMatch
                 return;
             }
 
-            CardGameEvents.StartGame.Dispatch(rowCount, colCount);
-
-            inputSelectionPanel.SetActive(false);
-
+            CardGameEvents.OnClickPlayGame.Dispatch(rowCount, colCount);
         }
 
         private void GetInput()
